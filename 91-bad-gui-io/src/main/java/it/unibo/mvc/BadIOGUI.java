@@ -5,19 +5,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -47,8 +47,8 @@ public class BadIOGUI {
         final JButton read = new JButton("Read");
         final JPanel personalPanel = new JPanel();
         personalPanel.setLayout(new BoxLayout(personalPanel, BoxLayout.X_AXIS));
-        personalPanel.add(write);
-        personalPanel.add(read);
+        personalPanel.add(write, BorderLayout.CENTER);
+        personalPanel.add(read, BorderLayout.CENTER);
         canvas.add(personalPanel, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,9 +76,19 @@ public class BadIOGUI {
         read.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Read string");
+                try(final BufferedReader br = new BufferedReader(new FileReader(PATH))) {
+                    String line;
+                    while((line = br.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                } catch (FileNotFoundException e1 ) {
+                    JOptionPane.showMessageDialog(frame, e1, "ERROR: File not found", JOptionPane.ERROR_MESSAGE);
+                } catch(IOException e2) {
+                    JOptionPane.showMessageDialog(frame, e2, "IO ERROR", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
+        
     }
 
     private void display() {
@@ -100,6 +110,7 @@ public class BadIOGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        frame.pack();
         /*
          * OK, ready to push the frame onscreen
          */
@@ -111,7 +122,7 @@ public class BadIOGUI {
      *
      * @param args ignored
      */
-    public static void main(final String... args) {
+    public static void main(final String... args) throws FileNotFoundException, IOException{
        new BadIOGUI().display();
     }
 }
