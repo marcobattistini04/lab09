@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,17 +38,16 @@ public final class SimpleGUI {
 
         final JButton save = new JButton("Save");
         mainPanel.add(save, BorderLayout.SOUTH);
-
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                int option = JOptionPane.showConfirmDialog(frame, "Do you really want to save?");
-                if (option == JOptionPane.YES_OPTION) {
-                    contr.writeInCurrentFile(textArea.getText());
-                }
+                    try {
+                       contr.writeInCurrentFile(textArea.getText());
+                    } catch (final IOException ioe) {
+                        JOptionPane.showMessageDialog(frame, "ERROR while trying to write in current file");
+                    }
             }
         });
-
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

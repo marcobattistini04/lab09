@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -46,18 +47,25 @@ public final class SimpleGUIWithFileChooser {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         mainPanel.add(textArea, BorderLayout.CENTER);
 
+        // CPD-OFF
+        // suppressed the CPD rule because the button save is designed to be same
         final JButton save = new JButton("Save");
         mainPanel.add(save, BorderLayout.SOUTH);
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                int option = JOptionPane.showConfirmDialog(frame, "Do you really want to save?");
+                final int option = JOptionPane.showConfirmDialog(frame, "Do you really want to save?");
                 if (option == JOptionPane.YES_OPTION) {
-                    contr.writeInCurrentFile(textArea.getText());
+                    try {
+                        contr.writeInCurrentFile(textArea.getText());
+                    } catch (final IOException e1) {
+                        JOptionPane.showMessageDialog(frame, "An error occurred while trying saving the progress in file "
+                        + contr.getCurrentFileName());
+                    }
                 }
             }
         });
-
+        //CPD-ON
         final JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new BorderLayout());
         final JTextField textField = new JTextField();
@@ -68,10 +76,10 @@ public final class SimpleGUIWithFileChooser {
         browse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int option = fileChooser.showOpenDialog(browse.getParent());
+                final JFileChooser fileChooser = new JFileChooser();
+                final int option = fileChooser.showOpenDialog(browse.getParent());
                 if (option == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
+                    final File file = fileChooser.getSelectedFile();
                     contr.setCurrentFile(file);
                     textField.setEditable(true);
                     textField.setText(contr.getCurrentFileName());
@@ -83,15 +91,18 @@ public final class SimpleGUIWithFileChooser {
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(final WindowEvent e) {
-                int n = JOptionPane.showConfirmDialog(frame, "Do you really want to quit?");
+                final int n = JOptionPane.showConfirmDialog(frame, "Do you really want to quit?");
                 if (n == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
             }
         });
     }
-
+    /**
+     * sets the visual aspects of the GUI with the file chooser(ex the correct dimensions compared to the screen).
+     */
     public void display() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();

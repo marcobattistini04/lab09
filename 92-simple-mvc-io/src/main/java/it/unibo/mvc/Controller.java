@@ -9,9 +9,8 @@ import java.nio.charset.StandardCharsets;
  * Application controller. Performs the I/O.
  */
 public final class Controller {
-    private File currentFile;
-    private boolean setted = false;
     private static final String PATH = System.getProperty("user.home") + File.separator;
+    private File currentFile = new File(PATH + "output.txt");
 
     /**
      * Set the current file.
@@ -19,7 +18,6 @@ public final class Controller {
      */
     public void setCurrentFile(final File file) {
         this.currentFile = file;
-        this.setted = true;
     } 
 
     /**
@@ -34,9 +32,6 @@ public final class Controller {
      * @return current file name
      */ 
     public String getCurrentFileName() {
-        if (!setted) {
-            return PATH + "output.txt";
-        }
         return PATH + this.currentFile.getName();
     }
 
@@ -44,11 +39,9 @@ public final class Controller {
      * write the string content in the current file.
      * @param content
      */
-    public void writeInCurrentFile(final String content) {
+    public void writeInCurrentFile(final String content) throws IOException {
         try (PrintStream ps = new PrintStream(getCurrentFileName(), StandardCharsets.UTF_8)) {
             ps.println(content);
-        } catch (IOException e) {
-            System.out.println("IO ERROR");
         }
     }
 
