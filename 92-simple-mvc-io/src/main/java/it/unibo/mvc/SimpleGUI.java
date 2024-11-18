@@ -18,9 +18,14 @@ import javax.swing.JTextArea;
  * 
  */
 public final class SimpleGUI {
-    private final static int PROPORTION = 5;
+    private static final  int PROPORTION = 5;
     private final JFrame frame = new JFrame("SimpleGUI");
 
+    /**
+     * Create a simple GUI with a Border Layout and a "Save" button, 
+     * in order to write the content of the textArea in the selected file.
+     * @param contr  the designed controller
+     */
     public SimpleGUI(final Controller contr) {
         final JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -35,9 +40,9 @@ public final class SimpleGUI {
 
         save.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 int option = JOptionPane.showConfirmDialog(frame, "Do you really want to save?");
-                if(option == JOptionPane.YES_OPTION) {
+                if (option == JOptionPane.YES_OPTION) {
                     contr.writeInCurrentFile(textArea.getText());
                 }
             }
@@ -47,6 +52,9 @@ public final class SimpleGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * sets the visual aspects of the simple GUI (ex the correct dimensions).
+     */
     public void display() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
@@ -63,7 +71,11 @@ public final class SimpleGUI {
          */
         frame.setVisible(true);
     }
-    public static void main(String[] args) {
+    /**
+     * Launches the application.
+     * @param args
+     */
+    public static void main(final String[] args) {
         new SimpleGUI(new Controller()).display();
     }
 }
