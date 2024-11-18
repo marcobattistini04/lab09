@@ -11,15 +11,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Random;
-
 /**
  * This class is a simple application that writes a random number on a file.
  * 
@@ -75,20 +74,18 @@ public class BadIOGUI {
         });
         read.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                try(final BufferedReader br = new BufferedReader(new FileReader(PATH))) {
-                    String line;
-                    while((line = br.readLine()) != null) {
-                        System.out.println(line);
+            public void actionPerformed(final ActionEvent e) {
+                try  {
+                    for (final var l: Files.readAllLines(Path.of(PATH), StandardCharsets.UTF_8)) {
+                        System.out.println(l); //NOPMD: required in this exercise
                     }
-                } catch (FileNotFoundException e1 ) {
+                } catch (FileNotFoundException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "ERROR: File not found", JOptionPane.ERROR_MESSAGE);
-                } catch(IOException e2) {
+                } catch (IOException e2) {
                     JOptionPane.showMessageDialog(frame, e2, "IO ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-        
     }
 
     private void display() {
@@ -122,7 +119,7 @@ public class BadIOGUI {
      *
      * @param args ignored
      */
-    public static void main(final String... args) throws FileNotFoundException, IOException{
+    public static void main(final String... args) throws FileNotFoundException, IOException {
        new BadIOGUI().display();
     }
 }
