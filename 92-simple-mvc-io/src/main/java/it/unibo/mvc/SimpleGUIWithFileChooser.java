@@ -69,6 +69,7 @@ public final class SimpleGUIWithFileChooser {
         final JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new BorderLayout());
         final JTextField textField = new JTextField();
+        textField.setText(contr.getCurrentFileName());
         textField.setEditable(false);
         upperPanel.add(textField, BorderLayout.CENTER);
         final JButton browse = new JButton("Browse..");
