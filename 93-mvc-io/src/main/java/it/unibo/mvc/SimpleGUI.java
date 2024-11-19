@@ -8,6 +8,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.util.List;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -19,7 +22,14 @@ import java.awt.event.ActionListener;
  */
 public final class SimpleGUI {
 
+    private static final int PROPORTION = 5;
     private final JFrame frame = new JFrame();
+
+    /**
+     * Sets the structure of all the application, in this case:
+     * TextField, TextArea and 2 Buttons.
+     * @param contr the designed controller
+     */
     public SimpleGUI(final Controller contr) {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -51,21 +61,36 @@ public final class SimpleGUI {
             }
         });
 
-        mainPanel.add(textField, BorderLayout.NORTH);
-        mainPanel.add(textArea, BorderLayout.CENTER);
-        mainPanel.add(print, BorderLayout.SOUTH);
-        mainPanel.add(showHistory, BorderLayout.SOUTH);
+        JPanel flowPanel = new JPanel();
+        flowPanel.setLayout(new FlowLayout());
+        flowPanel.add(print);
+        flowPanel.add(showHistory);
 
-        frame.setContentPane(mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainPanel.add(textField, BorderLayout.NORTH);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(flowPanel, BorderLayout.SOUTH);
+
+        this.frame.setContentPane(mainPanel);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Manages the visual aspect of the application
+     */
+    public void display() {
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+        this.frame.setSize(sw/PROPORTION, sh/PROPORTION);
+        this.frame.setLocationByPlatform(true);
+        this.frame.setVisible(true);
+    }
     /**
      * Launches the application.
      * @param args
      */
     public static void main(final String[] args) {
-        
+        new SimpleGUI(new SimpleController()).display();
     }
 
 }
