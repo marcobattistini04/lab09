@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.List;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,20 +30,20 @@ public final class SimpleGUI {
      * @param contr the designed controller
      */
     public SimpleGUI(final Controller contr) {
-        JPanel mainPanel = new JPanel();
+        final JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        JTextField textField = new JTextField();
+        final JTextField textField = new JTextField();
         textField.setEditable(true);
-        JTextArea textArea = new JTextArea();
+        final JTextArea textArea = new JTextArea();
         textArea.setLineWrap(true);
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        final JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        JButton print = new JButton("Print");
-        JButton showHistory = new JButton("Show History");
+        final JButton print = new JButton("Print");
+        final JButton showHistory = new JButton("Show History");
 
         print.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 contr.setNextString(textField.getText());
                 contr.printCurrentString();
             }
@@ -52,16 +51,15 @@ public final class SimpleGUI {
 
         showHistory.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                List<String> list = new ArrayList<>();
-                list = contr.getPrintedStringHistory();
-                for(String str: list) {
+            public void actionPerformed(final ActionEvent e) {
+                final List<String> list = contr.getPrintedStringHistory();
+                for (final String str: list) {
                     textArea.append(str + "\n");
                 }
             }
         });
 
-        JPanel flowPanel = new JPanel();
+        final JPanel flowPanel = new JPanel();
         flowPanel.setLayout(new FlowLayout());
         flowPanel.add(print);
         flowPanel.add(showHistory);
@@ -75,13 +73,13 @@ public final class SimpleGUI {
     }
 
     /**
-     * Manages the visual aspect of the application
+     * Manages the visual aspect of the application.
      */
     public void display() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        this.frame.setSize(sw/PROPORTION, sh/PROPORTION);
+        this.frame.setSize(sw / PROPORTION, sh / PROPORTION);
         this.frame.setLocationByPlatform(true);
         this.frame.setVisible(true);
     }

@@ -12,22 +12,22 @@ public interface Controller {
      * @param str the next string to be printed
      * @throws IllegalArgumentException if the string passed is null
      */
-    public void setNextString(final String str);
+    void setNextString(String str);
 
     /**
      * @return the next string to be printed
      */
-    public String getNextString();
+    String getNextString();
 
     /**
-     * @return the list of all printed strings
+     * @return a copy of the list of all printed strings
      */
-    public List<String> getPrintedStringHistory();
+    List<String> getPrintedStringHistory();
 
     /**
      * Prints the current string.
      * @throws IllegalStateException if it is not setted any current string
      */
-    public void printCurrentString();
+    void printCurrentString();
 
 }

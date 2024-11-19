@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * class implementing the Controller interface 
+ * Class implementing the Controller interface. 
  */
 public final class SimpleController implements Controller {
     private final List<String> list = new ArrayList<>();
     private String currentString;
     @Override
-    public void setNextString(String str) {
-        if(str == null) {
+    public void setNextString(final String str) {
+        if (str == null) {
             throw new IllegalArgumentException("Cannot pass a null argument");
         }
         this.currentString = str;
@@ -24,12 +24,12 @@ public final class SimpleController implements Controller {
 
     @Override
     public List<String> getPrintedStringHistory() {
-        return this.list;
+        return List.copyOf(this.list);
     }
 
     @Override
     public void printCurrentString() {
-        if(this.currentString == null) {
+        if (this.currentString == null) {
             throw new IllegalStateException("Cannot print anything beacuse the current string was not setted");
         }
         System.out.println(this.currentString); //NOPMD 
