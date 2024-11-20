@@ -70,17 +70,17 @@ public final class SimpleGUI {
 
         this.frame.setContentPane(mainPanel);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+        this.frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        this.frame.setLocationByPlatform(true);
     }
 
     /**
      * Manages the visual aspect of the application.
      */
     public void display() {
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int sw = (int) screen.getWidth();
-        final int sh = (int) screen.getHeight();
-        this.frame.setSize(sw / PROPORTION, sh / PROPORTION);
-        this.frame.setLocationByPlatform(true);
         this.frame.setVisible(true);
     }
     /**
