@@ -52,6 +52,7 @@ public final class SimpleGUI {
         showHistory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
+                textArea.setText("");
                 final List<String> list = contr.getPrintedStringHistory();
                 for (final String str: list) {
                     textArea.append(str + "\n");
