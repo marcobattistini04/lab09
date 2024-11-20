@@ -47,8 +47,6 @@ public final class SimpleGUIWithFileChooser {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         mainPanel.add(textArea, BorderLayout.CENTER);
 
-        // CPD-OFF
-        // suppressed the CPD rule because the button save is designed to be same
         final JButton save = new JButton("Save");
         mainPanel.add(save, BorderLayout.SOUTH);
         save.addActionListener(new ActionListener() {
@@ -65,7 +63,7 @@ public final class SimpleGUIWithFileChooser {
                 }
             }
         });
-        //CPD-ON
+
         final JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new BorderLayout());
         final JTextField textField = new JTextField();

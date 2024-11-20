@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -32,8 +31,6 @@ public final class SimpleGUI {
         mainPanel.setLayout(new BorderLayout());
         final JTextArea textArea = new JTextArea();
         textArea.setLineWrap(true);
-        final JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         mainPanel.add(textArea, BorderLayout.CENTER);
 
         final JButton save = new JButton("Save");
